@@ -1,9 +1,11 @@
-class Customer{
+import { Address } from "./address";
+export class Customer{
     constructor(
         public id: number,
         public name: string,
-        public email: string,
-        public phone: string
+        public email?: string,
+        public phone?: string,
+        public address?: Address
     ) {}
     
 
@@ -14,10 +16,10 @@ class Customer{
         return this.name;
     }
     getEmail(): string {
-        return this.email;
+        return this.email ?? "";
     }
     getPhone(): string {
-        return this.phone;
+        return this.phone ?? "";
     }
 
     setName(name: string): void {
@@ -25,5 +27,9 @@ class Customer{
     }
     setEmail(email: string): void {
         this.email = email;
+    }
+
+    setAddress(address: Address) {
+        this.address = address;
     }
 }
