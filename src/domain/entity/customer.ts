@@ -1,4 +1,4 @@
-import { Address } from "./address";
+import { Address } from "../value_objects/address";
 export class Customer{
     constructor(
         public id: number,
