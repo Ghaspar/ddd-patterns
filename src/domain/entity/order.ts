@@ -1,25 +1,30 @@
+import { validate } from 'uuid';
 import { OrderItem } from './order_item';
 
 export class Order {
 
     constructor(
-        public readonly id: number,
-        public readonly customerId: number,
-        public readonly items: OrderItem[] = [],
-    ) {}
-    
-    validate(): void {
-        if (!this.id || !this.customerId || !this.items.length) {
-        throw new Error("Invalid order data.");
-        }
-        this.items.forEach(item => {
-        if (!item.productId || item.quantity <= 0) {
-            throw new Error("Each item must have a valid product ID and quantity.");
-        }
-        });
+        private readonly id: number,
+        private readonly customerId: number,
+        private readonly items: OrderItem[] = [],
+        private total: number = 0
+    ) {
+
+        this.validate();
     }
     
-    toString(): string {
-        return `Order ID: ${this.id}, Customer ID: ${this.customerId}`;
+
+    validate(): void {
+        if (!this.id) {
+            throw new Error('ID é requerido');
+        }
+        if (!this.customerId) {
+            throw new Error('customerID é requerido');
+        }
+        
+    }
+
+    setTotal(): number {
+        return this.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
     }
 }

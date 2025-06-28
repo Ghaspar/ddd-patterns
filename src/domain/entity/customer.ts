@@ -1,15 +1,26 @@
 import { Address } from "../value_objects/address";
 export class Customer{
     constructor(
-        public id: number,
-        public name: string,
-        public email?: string,
-        public phone?: string,
-        public address?: Address
-    ) {}
+        private id: string,
+        private name: string,
+        private email?: string,
+        private phone?: string,
+        private address?: Address,
+        private active: boolean = true
+    ) {
+        this.validate();
+    }
     
+    validate(): void {
+        if (!this.id) {
+            throw new Error("ID é requerido");
+        }
+        if (!this.name) {
+            throw new Error("Nome é requerido");
+        }
+    }
 
-    getID(): number {
+    getID(): string {
         return this.id;
     }
     getName(): string {
@@ -31,5 +42,19 @@ export class Customer{
 
     setAddress(address: Address) {
         this.address = address;
+    }
+
+    setActivate(): void {
+        if (this.address === undefined) {
+            throw new Error("Address is mandatory to activate a customer");
+          }
+          this.active = true;
+    }
+    setDeactivate(): void {
+          this.active = false;
+    }
+
+    isActive(): boolean {
+        return this.active;
     }
 }
